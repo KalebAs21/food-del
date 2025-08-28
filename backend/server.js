@@ -1,29 +1,33 @@
-import express from 'express'
-import cors from 'cors'
-import { connectDb } from './config/db.js';
-import foodRouter from './routes/foodRoute.js';
+import express from "express";
+import cors from "cors";
+import dotenv from "dotenv";
+import { connectDb } from "./config/db.js";
+import foodRouter from "./routes/foodRoute.js";
+import path from "path";
 
+dotenv.config();
 
-//app config
-const app = express()
-const port = 4000;
+const app = express();
+const port = process.env.PORT || 4000;
 
+// middleware
+app.use(express.json());
+app.use(cors());
 
+// ✅ serve static uploads folder (so frontend can fetch images)
+app.use("/uploads", express.static(path.join(process.cwd(), "uploads")));
 
-//middleware
-app.use(express.json())
-app.use(cors())
-//db connection
-connectDb() 
+// db connection
+connectDb();
 
-//api endpoint
-app.use('/api/food', foodRouter)
+// api endpoints
+app.use("/api/food", foodRouter);
+app.use("/images", express.static("uploads"))
 
-app.get("/", (req, res)=>{
-    res.send('API Working ') 
-})
+app.get("/", (req, res) => {
+  res.send("API Working 🚀");
+});
 
-app.listen(port, ()=>{
-    console.log(`Server Started on http: //localhost:${port}`)
-})
-//mongodb+srv://kaleb:098765@cluster0.uhfd7a1.mongodb.net/?
+app.listen(port, () => {
+  console.log(`✅ Server started on http://localhost:${port}`);
+});
