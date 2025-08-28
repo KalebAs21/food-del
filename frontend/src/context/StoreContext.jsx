@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 export const StoreContext = createContext(null);
 
 
+
 const StoreContextProvider = (props) => {
     const [cartItems, setCartItems] = useState({});
     
