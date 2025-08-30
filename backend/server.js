@@ -5,6 +5,7 @@ import { connectDb } from "./config/db.js";
 import foodRouter from "./routes/foodRoute.js";
 import path from "path";
 import userRouter from "./routes/userRoute.js";
+
 //import  "dotenv/config"
 
 dotenv.config();

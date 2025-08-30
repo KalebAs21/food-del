@@ -6,8 +6,6 @@ import { useContext } from "react";
 import { StoreContext } from "../../context/StoreContext";
 import axios from "axios"
 
-
-
 const LoginPopup = ({ setShowLogin }) => {
     const {url, setToken} = useContext(StoreContext)
    
@@ -18,32 +16,30 @@ const LoginPopup = ({ setShowLogin }) => {
         password: ""
     })
 
-
- const onChangeHandler = (event) =>{
-    const name = event.target.name;
-    const value = event.target.value
-
-    setData(data=>({...data, [name]: value}))
- }
-
-
- const onLogin  = async (event) =>{
-    event.preventDefault()
-    const newUrl = url
-    if(currState === "login"){
-        newUrl += "/api/user/login"
-    }else{
-        newUrl += "/api/user/register   "
+    const onChangeHandler = (event) =>{
+        const name = event.target.name;
+        const value = event.target.value
+        setData(data=>({...data, [name]: value}))
     }
 
-    const response = await axios.post(newUrl,data)
-    if(response.data.success){
-        setToken(response.data.token);
-        localStorage.setItem('token', response.data.token)
-        setShowLogin(false)
-    }else{
-        alert(response.data.message)
-    }
+    const onLogin  = async (event) =>{
+        event.preventDefault()
+        let newUrl = url
+        if(currState === "Login"){   // ✅ fixed case (was "login")
+            newUrl += "/api/user/login"
+        }else{
+            newUrl += "/api/user/register"   // ✅ removed trailing spaces
+        }
+
+        const response = await axios.post(newUrl,data)
+        if(response.data.success){
+            setToken(response.data.token);
+            localStorage.setItem('token', response.data.token)
+
+            setShowLogin(false)
+        }else{
+            alert(response.data.message)
+        }
     }
 
     return (
@@ -68,7 +64,7 @@ const LoginPopup = ({ setShowLogin }) => {
                     <input onChange = {onChangeHandler} name = "password" value = {data.password} type="password" placeholder="password" required />
                 </div>
                 <button  type = "submit">
-                    {currState === "Sign Up" ? "Create acount" : "Login"}
+                    {currState === "Sign Up" ? "Create account" : "Login"}   {/* ✅ fixed typo */}
                 </button>
                 <div className="login-popup-condition">
                     <input type="checkbox" />
