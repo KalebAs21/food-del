@@ -8,7 +8,7 @@ const seedData = async () => {
     await connectDb();
     await Food.deleteMany({});
     console.log("🗑️ Old data deleted");
-
+    
     // strip _id if any and insert
     const cleaned = food_list.map(item => {
       const { _id, ...rest } = item;
