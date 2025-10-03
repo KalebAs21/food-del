@@ -1,6 +1,8 @@
+
 import userModel from "../models/userModel.js";
 
-//add cart
+
+//add cart 
 const addToCart = async (req, res) => {
   try {
     const userId = req.user; // string ID
@@ -64,5 +66,6 @@ const getCart = async (req, res) => {
     res.status(500).json({ success: false, message: "Server error", error: err.message });
   }
 };
+
 
 export { addToCart, removeFromCart, getCart };

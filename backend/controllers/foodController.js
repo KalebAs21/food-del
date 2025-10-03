@@ -1,3 +1,4 @@
+
 import foodModel from "../models/foodModel.js";
 import fs from "fs";
 
@@ -64,6 +65,7 @@ const removeFood = async (req, res) => {
     });
 
     // Delete the DB entry
+    
     await foodModel.findByIdAndDelete(req.body.id);
 
     res.json({ success: true, message: "Food Removed" });
