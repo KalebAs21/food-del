@@ -61,9 +61,9 @@ function Navbar({ setShowLogin }) {
                      ? 
                      <button onClick={() => setShowLogin(true)}>sign in</button>
                     : <div className = "nav-profile">
-                        <img src={assets.profile_icon} alt = '' />
+                        <img  src={assets.profile_icon} alt = '' />
                         <ul className = "nav-profile-dropdown">
-                            <li>
+                            <li onClick={()=>navigate("/myorders")}>
                                 <img src = {assets.bag_icon} />
                                 <p>Orders</p>
                             </li>

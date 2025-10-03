@@ -6,8 +6,9 @@ import { useContext } from "react";
 import { StoreContext } from "../../context/StoreContext";
 import axios from "axios"
 
+
 const LoginPopup = ({ setShowLogin }) => {
-    const {url, setToken} = useContext(StoreContext)
+    const {url, setToken} = useContext(StoreContext)    
    
     const [currState, setCurrState] = useState("Login");
     const [data, setData] = useState({
