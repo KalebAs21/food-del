@@ -4,8 +4,9 @@ import Sidebar from './components/Sidebar/Sidebar'
 import { Route, Routes } from 'react-router-dom'
 import Add from './pages/Add/Add.jsx'
 import List from './pages/List/List.jsx'
-import orders from './pages/Orders/orders.jsx'   // ✅ Capital O
+import Orders from './pages/Orders/Orders.jsx'   // ✅ Capital O
 import { ToastContainer } from 'react-toastify';
+
 
 const App = () => {
   const url = "http://localhost:4000";
@@ -19,7 +20,7 @@ const App = () => {
         <Routes>
           <Route path="/add" element={<Add url = {url} />} />
           <Route path="/list" element={<List url = {url} />} />
-          <Route path="/orders" element={<orders url = {url} />} />
+          <Route path="/orders" element={<Orders url = {url} />} />
         </Routes>
       </div>
     </div>
