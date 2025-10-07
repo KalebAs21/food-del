@@ -2,6 +2,8 @@
 import orderModel from "../models/orderModel.js";
 import userModel from "../models/userModel.js";
 import Stripe from "stripe";
+import mongoose from "mongoose";
+
 
 const stripeSecret = process.env.STRIPE_SECRET_KEY || "";
 const stripe = stripeSecret ? new Stripe(stripeSecret) : null;
@@ -173,4 +175,32 @@ const userOrders = async (req, res) => {
 };
 
 
-export { placeOrder, verifyOrder, userOrders };
+// listing for admin panel
+
+
+const listOrders = async (req, res) => {
+  try {
+    const orders = await orderModel.find({});
+    console.log("DEBUG orders:", orders.length);
+    res.json({ success: true, data: orders });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, message: error.message });
+  }
+};
+
+const updateOrderStatus  = async (req, res) =>{
+  const { orderId, status } = req.body;
+  try {
+    await orderModel.findByIdAndUpdate(orderId, { status });
+    res.json({ success: true, message: "Status updated" });
+  } catch (error) {
+    res.json({ success: false, message: "Error updating order" });
+  }
+}
+
+
+
+
+
+export { placeOrder, verifyOrder, userOrders, listOrders, updateOrderStatus };

@@ -7,6 +7,9 @@ import path from "path";
 import userRouter from "./routes/userRoute.js";
 import cartRouter from "./routes/cartRoute.js";
 import orderRouter from "./routes/orderRoute.js";
+import mongoose from "mongoose";
+import Order from "./models/orderModel.js"; 
+
 
 // import  "dotenv/config"
 
@@ -33,12 +36,23 @@ app.use("/api/cart", cartRouter)
 app.use("/api/order", orderRouter)
 //app.use("/api/order", orderRouter)
 
-
-
 app.get("/", (req, res) => {
   res.send("API Working 🚀");
 });
-
+app.get("/debug-orders", async (req, res) => {
+  try {
+    const count = await mongoose.connection.db.collection("orders").countDocuments();
+    const modelCount = await Order.countDocuments();
+    res.json({
+      connected: mongoose.connection.readyState,
+      dbName: mongoose.connection.name,
+      collectionCount: count,
+      modelCount,
+    });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
 
 
 app.listen(port, () => {
